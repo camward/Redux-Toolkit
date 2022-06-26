@@ -4,6 +4,7 @@ import { addNewTodo, fetchTodos } from "./store/todoSlice";
 import { AppDispatch, RootState } from "./store";
 import NewTodoForm from "./components/NewTodoForm";
 import TodoList from "./components/TodoList";
+import Goods from "./components/Goods";
 import "./App.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <div className="app">
+      <h3>Redux Toolkit</h3>
       <NewTodoForm
         value={text}
         updateText={setText}
@@ -31,6 +33,8 @@ function App() {
       />
       {status === "loading" && <p>Загрузка...</p>}
       <TodoList />
+      <h3>RTK Query</h3>
+      <Goods />
     </div>
   );
 }

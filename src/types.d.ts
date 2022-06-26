@@ -9,3 +9,8 @@ export interface NewTodoProps {
   updateText: Function;
   handleAction: MouseEventHandler<HTMLButtonElement>;
 }
+
+export interface GoodsProps {
+  id: number;
+  name: string;
+}
