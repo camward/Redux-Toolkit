@@ -1,20 +1,26 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "./store/todoSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewTodo, fetchTodos } from "./store/todoSlice";
+import { AppDispatch, RootState } from "./store";
 import NewTodoForm from "./components/NewTodoForm";
 import TodoList from "./components/TodoList";
 import "./App.css";
 
 function App() {
   const [text, setText] = useState("");
-  const dispatch = useDispatch();
+  const { status } = useSelector((state: RootState) => state.todos);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleAction = () => {
     if (text.trim().length) {
-      dispatch(addTodo({ text }));
+      dispatch(addNewTodo(text));
       setText("");
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -23,6 +29,7 @@ function App() {
         updateText={setText}
         handleAction={handleAction}
       />
+      {status === "loading" && <p>Загрузка...</p>}
       <TodoList />
     </div>
   );

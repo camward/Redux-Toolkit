@@ -1,17 +1,18 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { toggleComplete, removeTodo } from "../store/todoSlice";
+import { toggleStatus, deleteTodo } from "../store/todoSlice";
+import { AppDispatch } from "../store";
 import { TodoProps } from "../types";
 
-const TodoItem = ({ id, text, completed }: TodoProps) => {
-  const dispatch = useDispatch();
+const TodoItem = ({ id, title, completed }: TodoProps) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const onCompletedHandler = useCallback(() => {
-    dispatch(toggleComplete({ id }));
+    dispatch(toggleStatus(id));
   }, [id]);
 
   const onRemoveHandler = useCallback(() => {
-    dispatch(removeTodo({ id }));
+    dispatch(deleteTodo(id));
   }, [id]);
 
   return (
@@ -21,7 +22,7 @@ const TodoItem = ({ id, text, completed }: TodoProps) => {
         checked={completed}
         onChange={onCompletedHandler}
       />
-      <span>{text}</span>
+      <span>{title}</span>
       <span onClick={onRemoveHandler}>&times;</span>
     </li>
   );
